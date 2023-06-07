@@ -1,0 +1,112 @@
+paths:
+ /taxcategory/:
+    post:
+      description: Create a new category
+      tags:
+        - Category
+      parameters:
+        - name: body
+          in: body
+          description: Category data to create
+          required: true
+          schema:
+            type: object
+            properties:
+              storeId:
+                type: string
+              name:
+                type: string
+              description:
+                type: string
+              taxType:
+                type: string
+              taxFor:
+                type: enum
+              otherZoneRate:
+                type: decimal
+              isEnabled:
+                type: boolean
+              isForZoneMap:
+                type: boolean
+              zoneName:
+                type: string
+              zipCode:
+                type: string
+              taxCategoryId:
+                type: integer
+              taxPercent:
+                type: decimal
+            example:
+              storeId: "store1"
+              name: "Sales Tax"
+              description: "Sales Tax category"
+              taxType: "Sales"
+              taxFor: "SPECIFIC_ZONE"
+              otherZoneRate: 0.05
+              isEnabled: true
+              isForZoneMap: true
+              zoneName: "Downtown"
+              zipCode: "10001"
+              taxCategoryId: 1
+              taxPercent: 0.08
+      responses:
+        '200':
+          description: Category and tax zone mapping created successfully
+        '422':
+          description: Unprocessable Entity
+
+ /taxcategory/category:
+    get:
+      description: Get all categories
+      tags:
+        - Category
+      responses:
+        '200':
+          description: Success
+
+
+ /taxcategory/category/{id}:
+    post:
+      description: Edit a category by ID
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          description: Category ID
+          required: true
+          type: string
+        - name: body
+          in: body
+          description: Category data to update
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+            example: {
+              "name": "New Category Name"
+            }
+      responses:
+        '200':
+          description: Category updated successfully
+        '422':
+          description: Error
+
+ /taxcategory/taxcategories/{id}:
+    get:
+      description: Soft delete a category by ID
+      tags:
+        - Category
+      parameters:
+        - name: id
+          in: path
+          description: Category ID
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Category soft deleted successfully
+        '422':
+          description: Unprocessable Entity
